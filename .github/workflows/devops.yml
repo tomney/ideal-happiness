@@ -1,24 +1,24 @@
 name: Build and Deploy
 
 on: 
-	push:
-  	branches:
-			- master
+  push:
+    branches:
+      - master
 
 jobs: 
-	build:
-		runs-on: ubuntu-latest
-		steps:
-				- name: "Checkout"
-					# use something repeatable (i.e. specific version/SHA)
-					uses: actions/checkout@master
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        # use something repeatable (i.e. specific version/SHA)
+        uses: actions/checkout@master
 
-				- name: "Setup Node.js"
-					uses: actions/setup-node@v1
-					with: 
-						node-version: 12.x
+      - name: "Setup Node.js"
+        uses: actions/setup-node@v1
+        with: 
+          node-version: 12.x
 
-				- name: npm install
-					run: npm install --production
-					# if you need a secret, create it in "Settings" in your repo
-					# then reference with ${{ secrets.VAR_NAME }}
+      - name: npm install
+        run: npm install --production
+        # if you need a secret, create it in "Settings" in your repo
+        # then reference with ${{ secrets.VAR_NAME }}
