@@ -24,7 +24,7 @@ jobs:
 
       # scan image with smartcheck
       - name: Deep Security Smart Check
-        uses: actions/action
+        uses: .github/actions/action
         with:
             # Mandatory
             DSSC_IMAGE_NAME: gregtomneytrend/ideal-happiness-test
