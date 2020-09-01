@@ -1,0 +1,43 @@
+name: Build and Deploy
+
+on: 
+  push:
+    branches:
+      - master
+
+jobs: 
+  build-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout"
+        # use something repeatable (i.e. specific version/SHA)
+        uses: actions/checkout@master
+
+      # build and push image to test registry
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: gregtomneytrend/ideal-happiness-test
+          tags: latest
+
+      # scan image with smartcheck
+      - name: Deep Security Smart Check
+        uses: deepsecurity/Deep-Security-Smart-Check@version*
+        with:
+            # Mandatory
+            DSSC_IMAGE_NAME: gregtomneytrend/ideal-happiness-test
+            DSSC_SMARTCHECK_HOST: ${{ secrets.DSSC_SMARTCHECK_HOST }}
+            DSSC_SMARTCHECK_USER: ${{ secrets.DSSC_SMARTCHECK_USER }}
+            DSSC_SMARTCHECK_PASSWORD: ${{ secrets.DSSC_SMARTCHECK_PASSWORD }}
+            DSSC_IMAGE_PULL_AUTH: ${{ secrets.DSSC_IMAGE_PULL_AUTH }}
+
+      # push image to real registry if scan completes
+      - name: Build and push Docker images
+        uses: docker/build-push-action@v1
+        with:
+          username: ${{ secrets.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_PASSWORD }}
+          repository: gregtomneytrend/ideal-happiness
+          tags: latest
