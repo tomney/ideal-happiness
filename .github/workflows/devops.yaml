@@ -33,6 +33,7 @@ jobs:
             DSSC_SMARTCHECK_USER: ${{ secrets.DSSC_SMARTCHECK_USER }}
             DSSC_SMARTCHECK_PASSWORD: ${{ secrets.DSSC_SMARTCHECK_PASSWORD }}
             DSSC_IMAGE_PULL_AUTH: ${{ secrets.AWS_ECR_IMAGE_PULL_AUTH }}
+            DSSC_FINDINGS_THRESHOLD: {"malware": 0,"vulnerabilities": {"defcon1": 0,"critical": 0,"high": 0},"contents": {"defcon1": 0,"critical": 0,"high": 0},"checklists": {"defcon1": 0,"critical": 0,"high": 0}}
 
       # push image to real registry if scan completes
       - run: docker build --tag ideal-happiness:latest .
