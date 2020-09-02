@@ -17,9 +17,10 @@ jobs:
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: gregtomneytrend/ideal-happiness-test
+          username: _json_key
+          password: ${{ secrets.GCLOUD_SA_KEY }}
+          registry: gcr.io
+          repository: bolg-229922/ideal-happiness-test
           tags: latest
 
       # scan image with smartcheck
@@ -31,13 +32,14 @@ jobs:
             DSSC_SMARTCHECK_HOST: ${{ secrets.DSSC_SMARTCHECK_HOST }}
             DSSC_SMARTCHECK_USER: ${{ secrets.DSSC_SMARTCHECK_USER }}
             DSSC_SMARTCHECK_PASSWORD: ${{ secrets.DSSC_SMARTCHECK_PASSWORD }}
-            DSSC_IMAGE_PULL_AUTH: ${{ secrets.DSSC_IMAGE_PULL_AUTH }}
+            DSSC_IMAGE_PULL_AUTH: ${{ secrets.GCLOUD_SA_KEY }}
 
       # push image to real registry if scan completes
       - name: Build and push Docker images
         uses: docker/build-push-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: gregtomneytrend/ideal-happiness
+          username: _json_key
+          password: ${{ secrets.GCLOUD_SA_KEY }}
+          registry: gcr.io
+          repository: bolg-229922/ideal-happiness
           tags: latest
