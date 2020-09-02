@@ -14,32 +14,32 @@ jobs:
         uses: actions/checkout@master
 
       # build and push image to test registry
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1
+      - name: Push to ECR
+        id: ecr
+        uses: jwalton/gh-ecr-push@v1
         with:
-          username: _json_key
-          password: ${{ secrets.GCLOUD_SA_KEY }}
-          registry: gcr.io
-          repository: bolg-229922/ideal-happiness-test
-          tags: latest
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-2
+          image: ideal-happiness-test:latest
 
       # scan image with smartcheck
       - name: Deep Security Smart Check
         uses: ./.github/actions/smart-check-scan-action
         with:
             # Mandatory
-            DSSC_IMAGE_NAME: gcr.io/bolg-229922/ideal-happiness-test:latest
+            DSSC_IMAGE_NAME: 749472149179.dkr.ecr.us-east-2.amazonaws.com/ideal-happiness-test:latest
             DSSC_SMARTCHECK_HOST: ${{ secrets.DSSC_SMARTCHECK_HOST }}
             DSSC_SMARTCHECK_USER: ${{ secrets.DSSC_SMARTCHECK_USER }}
             DSSC_SMARTCHECK_PASSWORD: ${{ secrets.DSSC_SMARTCHECK_PASSWORD }}
-            DSSC_IMAGE_PULL_AUTH: ${{ secrets.GCLOUD_SA_KEY }}
+            DSSC_IMAGE_PULL_AUTH: ${{ secrets.AWS_ECR_IMAGE_PULL_AUTH }}
 
       # push image to real registry if scan completes
-      - name: Build and push Docker images
-        uses: docker/build-push-action@v1
+      - name: Push to ECR
+        id: ecr
+        uses: jwalton/gh-ecr-push@v1
         with:
-          username: _json_key
-          password: ${{ secrets.GCLOUD_SA_KEY }}
-          registry: gcr.io
-          repository: bolg-229922/ideal-happiness
-          tags: latest
+          access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-2
+          image: ideal-happiness:latest
