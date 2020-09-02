@@ -14,6 +14,7 @@ jobs:
         uses: actions/checkout@master
 
       # build and push image to test registry
+      - run: docker build --tag ideal-happiness-test:latest .
       - name: Push to ECR
         uses: jwalton/gh-ecr-push@v1
         with:
