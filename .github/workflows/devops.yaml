@@ -28,7 +28,7 @@ jobs:
         uses: ./.github/actions/smart-check-scan-action
         with:
             # Mandatory
-            DSSC_IMAGE_NAME: gcr.io/bolg-229922/ideal-happiness-test
+            DSSC_IMAGE_NAME: gcr.io/bolg-229922/ideal-happiness-test:latest
             DSSC_SMARTCHECK_HOST: ${{ secrets.DSSC_SMARTCHECK_HOST }}
             DSSC_SMARTCHECK_USER: ${{ secrets.DSSC_SMARTCHECK_USER }}
             DSSC_SMARTCHECK_PASSWORD: ${{ secrets.DSSC_SMARTCHECK_PASSWORD }}
