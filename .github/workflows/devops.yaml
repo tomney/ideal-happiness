@@ -35,6 +35,7 @@ jobs:
             DSSC_IMAGE_PULL_AUTH: ${{ secrets.AWS_ECR_IMAGE_PULL_AUTH }}
 
       # push image to real registry if scan completes
+      - run: docker build --tag ideal-happiness:latest .
       - name: Push to ECR
         uses: jwalton/gh-ecr-push@v1
         with:
