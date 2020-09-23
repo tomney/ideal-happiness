@@ -25,7 +25,7 @@ jobs:
 
       # scan image with smartcheck
       - name: Deep Security Smart Check
-        uses: ./.github/actions/smart-check-scan-action
+        uses: deep-security/smart-check-scan-action
         with:
             # Mandatory
             DSSC_IMAGE_NAME: 749472149179.dkr.ecr.us-east-2.amazonaws.com/ideal-happiness-test
